@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Família Frutuoso - Contagem Regressiva</title>
+    <style>
+        /* Reset básico */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #f0f0f0;
+            line-height: 1.6;
+        }
+
+        .banner-image {
+            width: 100%;
+            max-width: 450px;
+            margin: 10px auto;
+            display: block;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .countdown-section {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            padding: 1.5rem;
+            margin: 10px auto;
+            width: 95%;
+            max-width: 450px;
+            border-radius: 15px;
+        }
+
+        #countdown {
+            display: flex;
+            justify-content: center;
+            gap: 0.3rem;
+            margin: 0 0;
+            flex-wrap: wrap;
+        }
+
+        .countdown-item {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 0.2rem;
+            border-radius: 8px;
+            min-width: 60px;
+            flex: 1;
+            backdrop-filter: blur(5px);
+            margin: 2px;
+        }
+
+        .number {
+            font-size: 1.5em;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 0.05rem;
+        }
+
+        .label {
+            font-size: 0.5em;
+            opacity: 0.9;
+        }
+
+        /* Media Queries para dispositivos móveis */
+        @media (max-width: 300px) {
+            .banner-image {
+                margin: 3px auto;
+                border-radius: 8px;
+            }
+
+            .countdown-section {
+                padding: 0.3rem;
+                width: 100%;
+                border-radius: 0;
+            }
+
+            #countdown {
+                gap: 0.1rem;
+                margin: 0.5rem 0;
+            }
+
+            .countdown-item {
+                min-width: 15%;
+                padding: 0.3rem;
+                margin: 0px;
+            }
+
+            .number {
+                font-size: 1.2em;
+            }
+
+            .label {
+                font-size: 0.5em;
+            }
+
+            h2 {
+                font-size: 1.3rem;
+                margin-bottom: 0.8rem;
+            }
+        }
+
+        @media (max-width: 250px) {
+            .countdown-item {
+                min-width: 15%;
+                padding: 0.3rem;
+            }
+
+            .number {
+                font-size: 1.2em;
+            }
+
+            .label {
+                font-size: 0.5em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <img src="sjfrutuoso.png" class="banner-image" alt="Convite Família Frutuoso">
+
+    <div class="countdown-section">
+        <div id="countdown">
+            <div class="countdown-item">
+                <span class="number" id="days">00</span>
+                <span class="label">Dias</span>
+            </div>
+            <div class="countdown-item">
+                <span class="number" id="hours">00</span>
+                <span class="label">Horas</span>
+            </div>
+            <div class="countdown-item">
+                <span class="number" id="minutes">00</span>
+                <span class="label">Minutos</span>
+            </div>
+            <div class="countdown-item">
+                <span class="number" id="seconds">00</span>
+                <span class="label">Segundos</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mantido o mesmo JavaScript anterior
+        const eventDate = new Date('2025-06-21T00:00:00');
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = eventDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = days.toString().padStart(2, '0');
+            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+    </script>
+</body>
+
+</html>
