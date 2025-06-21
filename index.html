@@ -17,11 +17,21 @@
             font-family: 'Arial', sans-serif;
             background: #f0f0f0;
             line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 450px;
+            margin: 0 auto;
+            padding: 10px;
+            width: 95%;
         }
 
         .banner-image {
             width: 100%;
-            max-width: 450px;
             margin: 10px auto;
             display: block;
             border-radius: 10px;
@@ -33,9 +43,8 @@
             color: white;
             padding: 1.5rem;
             margin: 10px auto;
-            width: 95%;
-            max-width: 450px;
             border-radius: 15px;
+            text-align: center;
         }
 
         #countdown {
@@ -66,6 +75,26 @@
         .label {
             font-size: 0.5em;
             opacity: 0.9;
+        }
+
+        /* Estilo para o dia do evento */
+        #event-day {
+            display: none;
+            background: linear-gradient(135deg, #e74c3c, #e67e22);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 1.8em;
+            font-weight: bold;
+            margin: 10px auto;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
 
         /* Media Queries para dispositivos móveis */
@@ -100,9 +129,9 @@
                 font-size: 0.5em;
             }
 
-            h2 {
+            #event-day {
                 font-size: 1.3rem;
-                margin-bottom: 0.8rem;
+                padding: 1rem;
             }
         }
 
@@ -119,41 +148,66 @@
             .label {
                 font-size: 0.5em;
             }
+
+            #event-day {
+                font-size: 1.1rem;
+                padding: 0.8rem;
+            }
         }
     </style>
 </head>
 
 <body>
-    <img src="sjfrutuoso.png" class="banner-image" alt="Convite Família Frutuoso">
+    <div class="container">
+        <img src="sjfrutuoso.png" class="banner-image" alt="Convite Família Frutuoso">
 
-    <div class="countdown-section">
-        <div id="countdown">
-            <div class="countdown-item">
-                <span class="number" id="days">00</span>
-                <span class="label">Dias</span>
+        <div class="countdown-section" id="countdown-container">
+            <div id="countdown">
+                <div class="countdown-item">
+                    <span class="number" id="days">00</span>
+                    <span class="label">Dias</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="number" id="hours">00</span>
+                    <span class="label">Horas</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="number" id="minutes">00</span>
+                    <span class="label">Minutos</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="number" id="seconds">00</span>
+                    <span class="label">Segundos</span>
+                </div>
             </div>
-            <div class="countdown-item">
-                <span class="number" id="hours">00</span>
-                <span class="label">Horas</span>
-            </div>
-            <div class="countdown-item">
-                <span class="number" id="minutes">00</span>
-                <span class="label">Minutos</span>
-            </div>
-            <div class="countdown-item">
-                <span class="number" id="seconds">00</span>
-                <span class="label">Segundos</span>
-            </div>
+        </div>
+
+        <!-- Nova seção para o dia do evento -->
+        <div id="event-day">
+            É Hoje o São João da Família Frutuoso!
         </div>
     </div>
 
     <script>
-        // Mantido o mesmo JavaScript anterior
         const eventDate = new Date('2025-06-21T00:00:00');
+        const countdownContainer = document.getElementById('countdown-container');
+        const eventDayElement = document.getElementById('event-day');
 
         function updateCountdown() {
             const now = new Date().getTime();
             const distance = eventDate - now;
+
+            // Verificar se o evento já começou
+            if (distance <= 0) {
+                // Ocultar contagem regressiva
+                countdownContainer.style.display = 'none';
+                
+                // Mostrar mensagem do dia do evento
+                eventDayElement.style.display = 'block';
+                
+                // Parar a execução do contador
+                return;
+            }
 
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -166,8 +220,13 @@
             document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
         }
 
-        setInterval(updateCountdown, 1000);
+        // Verificar inicialmente se já é o dia do evento
         updateCountdown();
+        
+        // Configurar intervalo apenas se ainda não for o dia do evento
+        if (eventDate > new Date()) {
+            setInterval(updateCountdown, 1000);
+        }
     </script>
 </body>
 
